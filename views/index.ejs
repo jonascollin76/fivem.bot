@@ -1,0 +1,306 @@
+<%- include ("../partials/header") %>
+
+
+<meta name="google-site-verification" content="bEPLx5umDPUfC2fswoYZnYFZ_3uQIYaHNkMdozNrWVQ" />
+
+<style media="screen">
+  tr:nth-child(even){background-color: #f2f2f2;}
+</style>
+
+
+
+
+<!-- <div class="partnere">
+<center> -->
+
+<!-- <section id="discordwidget">
+    </div>
+    <div class="some">
+    <div id="discordlogo">
+    <a href="https://discord.gg/2Fd5dAFmXY"><img width=100%; style="border-radius:5%;" href="#" target="_blank" src="https://cdn.discordapp.com/attachments/826239270372245504/853703391054528522/sinbanner.png"></a>
+  </div>
+  <div id="discordconnect">
+  <p>SinCityRP<a href="https://discord.gg/2Fd5dAFmXY" target="_blank" button type="discord" class="dbutton">Tilslut SinCityRP</a>     <div id="members-count"></div>
+</div>
+</section> -->
+
+<!-- <p style="font-size: 11px; " onclick=removeSponsoredAds();>Tryk her for at fjerne server reklamer</p>
+</div>
+<p style="font-size: 11px; " id="addSponsoredAds" onclick=addSponsoredAds();>Tryk her for at se server reklamer</p>
+<p style="font-size: 11px; ">Du kan stemme på én server pr. dag.</p>
+</center> -->
+
+<!-- Lad os lave noget stats -->
+<!-- <?php
+$apiData = json_decode(@file_get_contents("https://fivem.dk/functions/api.php"), true);
+?> -->
+
+
+<!-- <center><input type="text" id="searchResource"><input type="submit" onclick="sogResource()" value="Søg" placeholder="Server navn:"></center> -->
+<h3 id="searchResult"></h3>
+<section>
+<center>
+<table class="servers" id="servers">
+    <tr>
+        <th>#</th>
+        <th>Navn</th>
+        <th>IP</th>
+        <th>Online</th>
+        <th>Points</th>
+        <!-- <th>Modder inde</th> -->
+        <th>Læs mere</th>
+        <th>Spillerliste</th>
+        <th>Vote</th>
+    </tr>
+
+
+
+<script type='text/javascript'>
+  const sendGetRequest = async () => {
+  var row =<%-JSON.stringify(result)%>
+  var mobile = false;
+
+  servers = document.getElementById('servers')
+
+  const mq = window.matchMedia( "(min-width: 960px)" );
+  if (mq.matches) {
+    console.log("pc");
+    imgStr = "35%";
+  } else {
+    console.log("mobil");
+    var mobile = true;
+    document.querySelector("#servers > tbody:nth-child(1) > tr > th:nth-child(3)").style.display = "none";
+    document.querySelector("#servers > tbody:nth-child(1) > tr > th:nth-child(7)").style.display = "none";
+    document.querySelector("#servers > tbody:nth-child(1) > tr > th:nth-child(6)").style.display = "none";
+    document.querySelector("#servers").style.width = "90%";
+    imgStr = "70%";
+    // for (var u = 1; u < row.length; u++) {
+    //   document.querySelector("#servers > tbody:nth-child("+u+") > tr > td:nth-child(3)").style.display = "none";
+    // }
+  }
+
+  row.reverse();
+  for (let i = 0; i < row.length; i++) {
+
+
+
+    if (row['port'] == 1) {
+
+      port['port'] == "";
+    }
+
+    try {
+
+      const server = await axios.get('https://fivem.dk/fivemApi/'+row[i]['ip']);
+
+            // const server = await axios.get('https://servers-frontend.fivem.net/api/servers/single/'+row[i]['ip']);
+
+
+
+          online = await server['data']['Data']['clients'];
+          max = server['data']['Data']['sv_maxclients'];
+
+
+
+          if (max) {
+            max = max;
+          }
+          else {
+            max = "?";
+          }
+
+          gametype = server['data']['Data']['gametype']
+
+          //Logo maker
+          if (typeof server['data']['Data']['iconVersion'] !== 'UNDEFINED') {
+
+            logoVersion = server['data']['Data']['iconVersion'];
+          ip = row[i]['ip'];
+          if (logoVersion) {
+            logo = "https://servers-live.fivem.net/servers/icon/"+ip+"/"+logoVersion+".png";
+          }
+          else {
+            logo = "https://i.imgur.com/Hk8dQhI.png";
+          }
+        }
+
+          // if (isset($row['logo'])) {
+
+
+          // fetch(`setClients/${row[i]['ip']}/${online}`)
+          // .then((resp) => resp.json())
+          // .then(function(data) {
+          //
+          // })
+          // .catch(function() {
+          //
+          // });
+
+          if (server['data']['Data']['resources'].includes("kaz_garage")) {
+            console.log("FANDT EN SKY SERVER: " + row[i]['name'])
+          }
+
+
+          // if (!row[i]['max'] == 0) {
+            servers.innerHTML += `
+            <tr><td><img style='width: ${imgStr};' src='${logo}'></td>
+            <td>${row[i]["name"]}</td>
+            <td>cfx.re/join/${row[i]["ip"]}</td>
+            <td>${online} / ${max}</td>
+            <td>${row[i]['points']}</td>
+            <td><a href='server/${row[i]['ip']}'>Læs mere</a></td>
+            <td><a href='show/${row[i]['ip']}'>Se her</a></td>
+            <td><a class='vote' href='#' onclick=vote('${row[i]['ip']}')>+1</a></td>
+            </tr>
+            `
+
+            if (mobile) {
+              n = i + 2
+              document.querySelector("#servers > tbody:nth-child("+n+") > tr > td:nth-child(3)").style.display = "none";
+              document.querySelector("#servers > tbody:nth-child("+n+") > tr > td:nth-child(7)").style.display = "none";
+              document.querySelector("#servers > tbody:nth-child("+n+") > tr > td:nth-child(6)").style.display = "none";
+            }
+          // }
+
+      // })
+  } catch (err) {
+     // Handle Error Here
+     logo = "https://i.imgur.com/91hRv9p.png";
+     online = "ukendt";
+     max = "ukendt";
+     bg = "#632121";
+     ip = `cfx.re/join/${row[i]["ip"]}`;
+     link = `<a href='server/${row[i]['ip']}'>Læs mere</a>`;
+
+     console.log(row[i]['name'])
+     if (row[i]['name'] == 'NoLifeRP') {
+       logo = row[i]['logo']
+       online = row[i]["clients"]
+       max = row[i]["max"]
+       bg = "#;";
+       ip = "NoLifeRP Launcher"
+       link = `<a href='https://discord.gg/wQ5JSWR'>Join Discord</a>`;
+     }
+     if (row[i]['name'] == 'DanishRP') {
+       logo = row[i]['logo']
+       online = row[i]["clients"]
+       max = row[i]["max"]
+       bg = "#;";
+       ip = "DanishRP Discord"
+       link = `<a href='https://discord.gg/danishrp'>Join Discord</a>`;
+     }
+
+     if (row[i]['name'] == 'Identity') {
+       logo = row[i]['logo']
+       online = row[i]["clients"]
+       max = row[i]["max"]
+       bg = "#;";
+       ip = "Identity Discord"
+       link = `<a href='https://discord.gg/DckVkRYPuj'>Join Discord</a>`;
+     }
+
+     servers.innerHTML += `
+     <tr style="background-color:${bg}"><td><img style='width: ${imgStr};' src='${logo}'></td>
+     <td>${row[i]["name"]}</td>
+     <td>${ip}</td>
+     <td>${online} / ${max}</td>
+     <td>${row[i]['points']}</td>
+     <td>${link}</td>
+     <td>Se her</td>
+     <td><a class='vote' href='#' onclick=vote('${row[i]['ip']}')>+1</a></td>
+     </tr>
+     `
+     if (mobile) {
+       n = i + 2
+       document.querySelector("#servers > tbody:nth-child("+n+") > tr > td:nth-child(3)").style.display = "none";
+       document.querySelector("#servers > tbody:nth-child("+n+") > tr > td:nth-child(7)").style.display = "none";
+       document.querySelector("#servers > tbody:nth-child("+n+") > tr > td:nth-child(6)").style.display = "none";
+     }
+
+};
+
+
+
+}
+
+
+  }
+sendGetRequest()
+
+</script>
+
+<!-- <script>
+  fetch('https://fivem.dk/functions/getClients.php')
+  .then((resp) => resp.json())
+  .then(function(data) {
+
+  })
+  .catch(function() {
+
+  });
+
+</script> -->
+</table>
+</center>
+
+</section>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.0/jquery.js"></script>
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-113210248-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-113210248-1');
+</script>
+
+<script>
+
+function vote(server) {
+
+
+const endpoint = 'vote/'+server;
+
+fetch(endpoint, {
+    method: 'GET',
+})
+.then((resp) => resp.json())
+.then(function(response) {
+
+    return response;
+    location.reload();
+return false;
+});
+
+}
+
+
+// function removeSponsoredAds() {
+//   document.querySelector("body > div").style.display = "none";
+//   document.cookie = "ads=noShow";
+//   document.getElementById("addSponsoredAds").style.display = "block";
+// }
+// if (document.cookie.includes("ads=noShow")) {
+//   document.querySelector("body > div").style.display = "none";
+// }
+// else {
+//   document.getElementById("addSponsoredAds").style.display = "none";
+//
+// }
+// function addSponsoredAds() {
+//   document.getElementById("addSponsoredAds").style.display = "none";
+//     document.querySelector("body > div").style.display = "block";
+//   document.cookie = "ads=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+// }
+
+</script>
+
+
+
+
+
+
+
+<%- include ("../partials/footer") %>

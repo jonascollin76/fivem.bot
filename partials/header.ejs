@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <link href="../style.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="https://use.typekit.net/ust4hqh.css">
+    <title id="titel">FiveM Danmark</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:site" content="FiveM.dk">
+        <meta name="twitter:creator" content="4">
+        <meta name="twitter:title" content="FiveM.dk - Serverliste">
+        <meta property="og:title" content="FiveM.dk - Serverliste" />
+        <meta property="og:type" content="website" />
+            <meta name="twitter:description" content="Få et overblik over de bedste FiveM servere i Danmark">
+            <meta property="og:description" content="Få et overblik over de bedste FiveM servere i Danmar" />
+
+            <meta name="twitter:image" content="https://fivem.dk/fivemdk.png">
+            <meta property="og:image" content="fivemdk.png" />
+            <meta property="og:image:type" content="image/jpg" />
+            <meta property="og:image:width" content="2800" />
+            <meta property="og:image:height" content="300" />
+
+    <!-- <script src="//cdnjs.cloudflare.com/ajax/libs/Snowstorm/20131208/snowstorm-min.js"></script> -->
+  </head>
+  <body>
+    <ul>
+      <!-- <li><a href="#contact" id="myBtn">Kontakt</a></li> -->
+      <li><a href="/">Forside</a></li>
+      <!-- <li><a href="scripts.php">Scripts</a></li>
+      <li><a href="bans.php">Bans</a></li>
+      <li><a href="servers.php">Servere</a></li>
+      <li><a href="index.php">Forside</a></li> -->
+    </ul>
+
+    <style media="screen">
+      .column {
+      float: left;
+      width: 20%;
+      padding: 2%;
+      /* height: 350px; /* Should be removed. Only for demonstration */
+      /* border: 0.2em solid white; */
+      border-radius: 1%;
+      /* margin-left: 2%; */
+      /* margin-right: 2%; */
+      margin-top: 1%;
+      box-sizing: border-box;
+    }
+
+    .row {
+      width: 100%;
+      margin: auto;
+    }
+
+    .row:after {
+      content: "";
+      display: table;
+      clear: both;
+    }
+
+
+    @media only screen and (max-width: 600px) {
+      .column {
+      width: 100%;
+      display:none;
+    }
+      .column:nth-child(3) {
+        display:block;
+      }
+    }
+
+
+
+
+    </style>
+
+
+      <section id="stats" class="row">
+      <script>
+        fetch('api/v1') // Call the fetch function passing the url of the API as a parameter
+        .then((resp) => resp.json()) // Transform the data into json
+        .then(function(data) {
+
+
+          document.getElementById('stats').innerHTML = `
+          <div class="column" >
+            <h1>Votes i alt</h1>
+            <p class="count">${data['result'][0]['total']}</span>
+            <h1>Votes i dag</h1>
+            <p class="count">${data['result2'][0]['today']}</span>
+          </div>
+
+
+          <div class="column" ><br><br><br>
+          <h1>Din server her?</h1>
+          <p class="count" style="font-size:20px;">1 måned: 150 DKK<br>3 måneder: 400 DKK</p>
+          </div>
+
+          <div class="column" >
+            <a href="https://discord.gg/hbV4RdgWH5"><img style="width:100%;" src="https://i.imgur.com/QqEq1TG.png" alt="Annonce"></a>
+          </div>
+
+          <div class="column" ><br><br><br>
+          <h1>Reklameplads</h1>
+          <p class="count" style="font-size:20px;">Opret en ticket</p>
+          </div>
+
+          <div class="column" >
+          <h1>Forskellige voters</h1>
+          <p class="count">${data['result3'][0]['ips']}</span>
+            <h1>Samlet spillertal</h1>
+            <p class="count">${data['result4'][0]['clients']}</span>
+          </div>
+          `
+
+
+
+        // document.getElementById('stats').innerHTML = `<div class="countDiv">
+        //       <h1>Votes i alt</h1>
+        //       <p class="count">${data['result'][0]['total']}</span>
+        //   </div>
+        //   <div class="countDiv2">
+        //       <h1>Votes i dag</h1>
+        //       <p  class="count">${data['result2'][0]['today']}</span>
+        //   </div>
+        //   <a href="https://discord.gg/hbV4RdgWH5"><img src="https://i.imgur.com/QqEq1TG.png" alt="Annonce"></a>
+        //   <div class="countDiv2">
+        //       <h1>Forskellige voters</h1>
+        //       <p  class="count">${data['result3'][0]['ips']}</span>
+        //   </div>
+        //   <div class="countDiv2">
+        //       <h1>Samlet spillertal</h1>
+        //       <p  class="count">${data['result4'][0]['clients']}</span>
+        //   </div>
+        //   <!-- <div class="countDiv2">
+        //       <h1>Maks spillere</h1>
+        //       <p  class="count"><?php echo $apiData['max'] ?></span>
+        //   </div> -->
+        //   <br>`
+        })
+        .catch(function() {
+            // This is where you run code if the server returns any errors
+        });
+
+      </script>
+
+
+    </section>

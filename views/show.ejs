@@ -1,0 +1,223 @@
+<%- include ("../partials/header") %>
+
+
+<meta name="google-site-verification" content="bEPLx5umDPUfC2fswoYZnYFZ_3uQIYaHNkMdozNrWVQ" />
+
+<style media="screen">
+  tr:nth-child(even){background-color: #f2f2f2;}
+</style>
+
+
+
+</section>
+
+<section style="text-align:center" id="stats">
+
+
+</section>
+
+<section>
+
+<style media="screen">
+  .column {
+  float: left;
+  width: 15%;
+  padding: 2%;
+  /* height: 350px; /* Should be removed. Only for demonstration */
+  border: 0.2em solid white;
+  border-radius: 1%;
+  margin-left: 2%;
+  margin-right: 2%;
+  margin-top: 1%;
+  box-sizing: border-box;
+}
+
+.row {
+  width: 70%;
+  margin: auto;
+  margin-buttom: 5%;
+}
+
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+</style>
+<div id="online" style="margin-bottom:6px;"></div>
+<div id="shops" style="margin-bottom:1460px;">
+<div class="row">
+</div>
+
+
+<script>
+  var row =<%-JSON.stringify(drp)%>
+  console.table(row)
+
+  servers = document.getElementById('shops')
+
+  row.reverse();
+  var discord = "";
+  online = document.getElementById('online')
+  online.innerHTML = `<center><h1>Der er ${row.length} online</h1></center>`
+
+    for (var i = 0; i < row.length; i++) {
+      ids = row[i]['identifiers'];
+
+
+      for (var t = 0; t < ids.length; t++) {
+
+        if (ids[t].includes("discord:")) {
+          discordD = ids[t]
+          discord = discordD.replace("discord:", "")
+        }
+
+      }
+      for (var y = 0; y < ids.length; y++) {
+
+
+        // console.log(discord)
+
+        if (ids[y].includes("steam:")) {
+          steam = ids[y]
+          steamId = steam.replace("steam:", "")
+          steamFix = hexToDec(steamId)
+
+          console.log(steamFix)
+          servers.innerHTML += `
+          <div class="column" id="${row[i]['id']}">
+            <h3>${row[i]['name']}</h3>
+            <h3>ID: ${row[i]['id']}</h2>
+              <h3>Ping: ${row[i]['ping']}</h2>
+                <a href="https://steamcommunity.com/profiles/${steamFix}" target="_blank" button="" type="discord" class="dbutton">Steam Profil</a>
+                <a onclick="getDiscord('${row[i]['id']}', '${discord}')" type="discord" id="button${row[i]['id']}" class="dbutton">Find Discord info (WIP)</a>
+              </div>
+              `
+        }
+      }
+
+    }
+
+
+
+    function getDiscord(id, discord) {
+
+      fetch('https://fivem.dk/getUser/'+discord) // Call the fetch function passing the url of the API as a parameter
+      .then((resp) => resp.json()) // Transform the data into json
+      .then(function(data) {
+
+        did = data['id']
+        uid = data['avatar']
+        bid = data['banner']
+        name = `${data['username']}#${data['discriminator']}`
+
+        banner = `https://cdn.discordapp.com/avatars/${did}/${bid}.png`
+        avatar = `https://cdn.discordapp.com/avatars/${did}/${uid}.png`
+        console.log(avatar)
+
+        hideElement("button"+id)
+
+      document.getElementById(id).innerHTML += `<h2>Discord info</h2>
+      <h3>${name}<br>
+      <br><img src="${avatar}" alt=""><br>
+      <br><img src="${banner}" alt=""></h3>`
+      })
+      .catch(function() {
+          // This is where you run code if the server returns any errors
+      });
+    }
+
+    function hideElement(element) {
+  var x = document.getElementById(element);
+  if (x.style.display === "none") {
+    x.style.display = "block";
+  } else {
+    x.style.display = "none";
+  }
+}
+
+    function hexToDec(s) {
+    var i, j, digits = [0], carry;
+    for (i = 0; i < s.length; i += 1) {
+        carry = parseInt(s.charAt(i), 16);
+        for (j = 0; j < digits.length; j += 1) {
+            digits[j] = digits[j] * 16 + carry;
+            carry = digits[j] / 10 | 0;
+            digits[j] %= 10;
+        }
+        while (carry > 0) {
+            digits.push(carry % 10);
+            carry = carry / 10 | 0;
+        }
+    }
+    return digits.reverse().join('');
+}
+</script>
+
+
+</div>
+
+
+
+
+</section>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.0/jquery.js"></script>
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-113210248-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-113210248-1');
+</script>
+
+<script>
+
+function vote(server) {
+
+
+const endpoint = 'vote/'+server;
+
+fetch(endpoint, {
+    method: 'GET',
+})
+.then((resp) => resp.json())
+.then(function(response) {
+
+    return response;
+    location.reload();
+return false;
+});
+
+}
+
+
+function removeSponsoredAds() {
+  document.querySelector("body > div").style.display = "none";
+  document.cookie = "ads=noShow";
+  document.getElementById("addSponsoredAds").style.display = "block";
+}
+if (document.cookie.includes("ads=noShow")) {
+  document.querySelector("body > div").style.display = "none";
+}
+else {
+  document.getElementById("addSponsoredAds").style.display = "none";
+
+}
+function addSponsoredAds() {
+  document.getElementById("addSponsoredAds").style.display = "none";
+    document.querySelector("body > div").style.display = "block";
+  document.cookie = "ads=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+}
+
+</script>
+
+
+
+
+
+
+
+<%- include ("../partials/footer") %>

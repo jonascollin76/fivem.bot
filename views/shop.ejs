@@ -1,0 +1,233 @@
+<%- include ("../partials/header") %>
+
+
+<meta name="google-site-verification" content="bEPLx5umDPUfC2fswoYZnYFZ_3uQIYaHNkMdozNrWVQ" />
+
+<style media="screen">
+  tr:nth-child(even){background-color: #f2f2f2;}
+</style>
+
+
+
+</section>
+<div class="partnere">
+<center>
+    <!-- <section id="discordwidget">
+        <div class="some">
+            <div id="discordlogo">
+            <img href="https://discord.gg/2Bf2cpZeaH" target="_blank" src="https://cdn.discordapp.com/attachments/693494144466681896/787022117165072424/Olympia_Network-01.png">
+            </div>
+            <div id="discordconnect">
+                <p>Olympia Network<a href="https://discord.gg/VHDPNxezQc" target="_blank" button type="discord" class="dbutton">Tilslut Olympia Network</button></a>     <div id="members-count"></div>
+            </div>
+        </div>
+        </section> -->
+        <section id="discordwidget">
+        <div style="margin-left: 10px;" class="some">
+            <div id="discordlogo">
+          <img href="#" target="_blank" src="https://cdn.discordapp.com/attachments/693494144466681896/810463856228958258/Logo_til_reglerne.png">
+            </div>
+            <div id="discordconnect">
+                <p>MazeTown<a href="https://discord.gg/6TQW6Jv" target="_blank" button type="discord" class="dbutton">Tilslut MazeTown</a>     <div id="members-count"></div>
+            </div>
+        </div>
+    </section>
+    <!-- <section id="discordwidget">
+    <div style="margin-left: 10px;" class="some">
+        <div id="discordlogo">
+          <a href="https://discord.gg/wy8m7GCz6C"><img style="border-radius:5%;" href="#" target="_blank" src="https://cdn.discordapp.com/attachments/693494144466681896/787014525043605554/Udklipccc.png"></a>
+        </div>
+        <div id="discordconnect">
+            <p>DailyRP<a href="https://discord.gg/wy8m7GCz6C" target="_blank" button type="discord" class="dbutton">Tilslut DailyRP</a>     <div id="members-count"></div>
+        </div>
+    </div>
+</section> -->
+
+<!-- <section id="discordwidget">
+<div style="margin-left: 10px;" class="some">
+    <div id="discordlogo">
+      <a href="https://paypal.me/LasseMejdahl"><img href="#" target="_blank" src="https://i.imgur.com/919AqJS.png"></a>
+    </div>
+    <div id="discordconnect">
+        <p>Din server her? Priser fra 50 kr.<a href="https://discord.com/users/171019545765478400" target="_blank" button type="discord" class="dbutton">Kontakt Lasse Christensen#0001</button></a>     <div id="members-count"></div>
+    </div>
+</div>
+</section> -->
+<p style="font-size: 11px; " onclick=removeSponsoredAds();>Tryk her for at fjerne server reklamer</p>
+</center>
+</div>
+<p style="font-size: 11px; " id="addSponsoredAds" onclick=addSponsoredAds();>Tryk her for at se server reklamer</p>
+<p style="font-size: 11px; ">Du kan stemme på én server pr. dag.</p>
+
+<!-- Lad os lave noget stats -->
+<!-- <?php
+$apiData = json_decode(@file_get_contents("https://fivem.dk/functions/api.php"), true);
+?> -->
+
+<section style="text-align:center" id="stats">
+<script>
+  fetch('api/v1') // Call the fetch function passing the url of the API as a parameter
+  .then((resp) => resp.json()) // Transform the data into json
+  .then(function(data) {
+
+
+
+  document.getElementById('stats').innerHTML = `<div class="countDiv">
+        <h1>Votes i alt</h1>
+        <p class="count">${data['result'][0]['total']}</span>
+    </div>
+    <div class="countDiv2">
+        <h1>Votes i dag</h1>
+        <p  class="count">${data['result2'][0]['today']}</span>
+    </div>
+    <div class="countDiv2">
+        <h1>Forskellige voters</h1>
+        <p  class="count">${data['result3'][0]['ips']}</span>
+    </div>
+    <div class="countDiv2">
+        <h1>Samlet spillertal</h1>
+        <p  class="count">${data['result4'][0]['clients']}</span>
+    </div>
+    <!-- <div class="countDiv2">
+        <h1>Maks spillere</h1>
+        <p  class="count"><?php echo $apiData['max'] ?></span>
+    </div> -->
+    <br>`
+  })
+  .catch(function() {
+      // This is where you run code if the server returns any errors
+  });
+
+</script>
+
+</section>
+
+<section>
+
+<style media="screen">
+  .column {
+  float: left;
+  width: 20%;
+  padding: 2%;
+  height: 350px; /* Should be removed. Only for demonstration */
+  border: 0.2em solid white;
+  border-radius: 1%;
+  margin-left: 5%;
+  margin-top: 5%;
+  box-sizing: border-box;
+}
+
+.row {
+  width: 80%;
+  margin: auto;
+}
+
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+</style>
+
+<div id="shops" style="margin-bottom:460px;">
+<div class="row">
+</div>
+
+
+<script type='text/javascript'>
+var row =<%-JSON.stringify(result)%>
+
+servers = document.getElementById('shops')
+
+row.reverse();
+
+
+  for (var i = 0; i < row.length; i++) {
+    servers.innerHTML += `
+      <div class="column">
+        <h2>${row[i]['name']}</h2>
+          <h3>Sælger: ${row[i]['seller']}</h2>
+            <h3>Pris: ${row[i]['price']} DKK</h2>
+        <a href="https://discord.gg/6TQW6Jv" target="_blank" button="" type="discord" class="dbutton">Se showcase</a>
+        <a href="https://discord.gg/6TQW6Jv" target="_blank" button="" type="discord" class="dbutton">Kontakt sælger</a>
+      </div>
+      `
+  }
+
+
+
+
+
+
+
+</script>
+
+
+</div>
+
+
+
+
+</div>
+
+</section>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.0/jquery.js"></script>
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-113210248-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-113210248-1');
+</script>
+
+<script>
+
+function vote(server) {
+
+
+const endpoint = 'vote/'+server;
+
+fetch(endpoint, {
+    method: 'GET',
+})
+.then((resp) => resp.json())
+.then(function(response) {
+
+    return response;
+    location.reload();
+return false;
+});
+
+}
+
+
+function removeSponsoredAds() {
+  document.querySelector("body > div").style.display = "none";
+  document.cookie = "ads=noShow";
+  document.getElementById("addSponsoredAds").style.display = "block";
+}
+if (document.cookie.includes("ads=noShow")) {
+  document.querySelector("body > div").style.display = "none";
+}
+else {
+  document.getElementById("addSponsoredAds").style.display = "none";
+
+}
+function addSponsoredAds() {
+  document.getElementById("addSponsoredAds").style.display = "none";
+    document.querySelector("body > div").style.display = "block";
+  document.cookie = "ads=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+}
+
+</script>
+
+
+
+
+
+
+
+<%- include ("../partials/footer") %>
